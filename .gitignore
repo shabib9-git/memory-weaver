@@ -26,6 +26,10 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Uploaded files (served from GCS in production)
+server/uploads/*
+!server/uploads/.gitkeep
+
 # Temp
 /tmp/
 *.tmp
