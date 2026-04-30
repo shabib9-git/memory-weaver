@@ -1,0 +1,11 @@
+.gcloudignore
+.git
+.gitignore
+.env
+*.local
+node_modules/
+client/node_modules/
+server/node_modules/
+client/dist/
+.DS_Store
+*.log

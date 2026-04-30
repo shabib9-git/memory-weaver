@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- MemoryWeaver favicon: stylised thread/weave motif in brand indigo -->
+  <rect width="64" height="64" rx="14" fill="#4f46e5"/>
+  <!-- Thread curves forming a weave pattern -->
+  <path d="M16 20 Q32 14 48 20 Q32 26 16 32 Q32 38 48 44" 
+        stroke="#818cf8" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M16 32 Q32 26 48 32 Q32 38 16 44" 
+        stroke="#fcd34d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Small memory dot -->
+  <circle cx="32" cy="32" r="4" fill="#fff" opacity="0.9"/>
+</svg>

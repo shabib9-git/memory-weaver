@@ -1,0 +1,58 @@
+# docker-compose.yml — Local development environment for MemoryWeaver
+#
+# Usage:
+#   1. Copy .env.example → .env and fill in your credentials
+#   2. docker compose up --build
+#   3. Open http://localhost:5173 (React SPA, with HMR)
+#      The SPA proxies /api and /auth calls to the Express server on :8080
+#
+# Note: This compose file is for local development only.
+# For production, use the Dockerfile directly with Cloud Build (see docs/deployment-cloud-run.md).
+
+version: '3.9'
+
+services:
+  # ── Express backend (development) ─────────────────────────────────
+  # Uses the plain node:20-alpine image so nodemon (a devDependency) is
+  # available after `npm install` runs at container start.
+  server:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - '8080:8080'
+    environment:
+      NODE_ENV: development
+      PORT: 8080
+    env_file:
+      - .env                    # Load all secrets from .env
+    volumes:
+      # Mount source — changes are reflected immediately via nodemon
+      - ./server:/app/server
+      # Persist node_modules inside the container to avoid macOS bind-mount slowness
+      - server_node_modules:/app/server/node_modules
+    # Install all deps (including devDependencies) then start with nodemon
+    command: sh -c "cd server && npm install && npm run dev"
+    restart: unless-stopped
+
+  # ── React SPA dev server (Vite HMR) ───────────────────────────────
+  client:
+    image: node:20-alpine
+    working_dir: /app/client
+    ports:
+      - '5173:5173'
+    environment:
+      # Pass GA4 ID through from the host shell if set; safe to leave empty
+      VITE_GA4_MEASUREMENT_ID: ${VITE_GA4_MEASUREMENT_ID:-}
+    volumes:
+      - ./client:/app/client
+      - client_node_modules:/app/client/node_modules
+    # Install deps then start Vite bound to all interfaces so Docker port-mapping works
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - server
+    restart: unless-stopped
+
+# Named volumes keep node_modules inside the container image layer
+volumes:
+  server_node_modules:
+  client_node_modules:
