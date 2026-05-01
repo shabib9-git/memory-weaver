@@ -156,16 +156,6 @@ export default function LoginPage() {
         <p style={{ marginTop: '4px', fontSize: '0.75rem', color: 'var(--color-text-faint)' }}>
           Powered by Google Gemini · Google Drive · Google Firestore · Google Cloud Run
         </p>
-        {/* Project 1 back-link — replace # with your deployed Project 1 URL */}
-        <p style={{ marginTop: '8px', fontSize: '0.75rem' }}>
-          <a
-            href="#"
-            style={{ color: 'var(--color-primary-light)', textDecoration: 'underline' }}
-            title="Back to Project 1 static site"
-          >
-            ← Back to Project 1
-          </a>
-        </p>
       </footer>
     </div>
   );
